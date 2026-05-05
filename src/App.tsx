@@ -23,14 +23,16 @@ export default function App() {
         <Navbar onDeployClick={() => setIsDeployOpen(true)} />
         
         <div className="flex flex-1 overflow-hidden relative">
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/engine" element={<EngineWiki />} />
-              <Route path="/nodes" element={<Nodes />} />
-              <Route path="*" element={<Home />} />
-            </Routes>
-          </AnimatePresence>
+          <main className="flex-1 overflow-y-auto no-scrollbar bg-immersive-glow relative z-10">
+            <AnimatePresence mode="wait">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/engine" element={<EngineWiki />} />
+                <Route path="/nodes" element={<Nodes />} />
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </AnimatePresence>
+          </main>
           
           {/* Left Rail: Active Stories */}
           <aside className="hidden lg:flex w-64 border-r border-white/5 bg-black/20 flex-col p-6 overflow-y-auto no-scrollbar shrink-0">
