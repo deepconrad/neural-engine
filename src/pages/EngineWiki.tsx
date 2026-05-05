@@ -15,16 +15,16 @@ export default function EngineWiki() {
         animate={{ opacity: 1, scale: 1 }}
         className="mb-16 text-center md:text-left"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-mono mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-[10px] font-mono mb-6">
           <Activity size={12} />
           <span>CORE STATUS: OPERATIONAL</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-transparent mb-6">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-br from-text-main to-text-muted bg-clip-text text-transparent mb-6">
           Neural-Engine
           <br />
-          <span className="text-cyan-400">Deep Conrad V2.4</span>
+          <span className="text-cyan-600 dark:text-cyan-400">Deep Conrad V2.4</span>
         </h1>
-        <p className="text-zinc-400 text-lg max-w-xl font-light leading-relaxed">
+        <p className="text-text-muted text-lg max-w-xl font-light leading-relaxed">
           The industry benchmark for massive-scale parallel inference. Optimized for synaptic pathway routing and high-density tensor processing.
         </p>
       </motion.div>
@@ -56,35 +56,35 @@ export default function EngineWiki() {
         />
       </div>
 
-      <section className="border border-white/5 bg-zinc-900/30 rounded-3xl p-8 md:p-12 mb-16">
+      <section className="border border-border-main bg-bg-abyss/40 rounded-3xl p-8 md:p-12 mb-16">
         <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-          <LayoutGrid className="text-cyan-400" />
+          <LayoutGrid className="text-cyan-600 dark:text-cyan-400" />
           Technical Overview
         </h2>
         <div className="space-y-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-1">
-              <h3 className="font-mono text-xs uppercase text-cyan-500 mb-2">01 Architecture</h3>
-              <p className="text-sm text-zinc-300">The core utilizes a "Liquid Dynamic" mesh, allowing weights to be re-routed dynamically to avoid bottlenecks.</p>
+              <h3 className="font-mono text-xs uppercase text-cyan-600 dark:text-cyan-500 mb-2">01 Architecture</h3>
+              <p className="text-sm text-text-muted">The core utilizes a "Liquid Dynamic" mesh, allowing weights to be re-routed dynamically to avoid bottlenecks.</p>
             </div>
             <div className="md:col-span-1">
-              <h3 className="font-mono text-xs uppercase text-cyan-500 mb-2">02 Cooling</h3>
-              <p className="text-sm text-zinc-300">Cryo-cycle immersion cooling maintains optimal superconductivity for 24/7 high-load inference.</p>
+              <h3 className="font-mono text-xs uppercase text-cyan-600 dark:text-cyan-500 mb-2">02 Cooling</h3>
+              <p className="text-sm text-text-muted">Cryo-cycle immersion cooling maintains optimal superconductivity for 24/7 high-load inference.</p>
             </div>
             <div className="md:col-span-1">
-              <h3 className="font-mono text-xs uppercase text-cyan-500 mb-2">03 Deployment</h3>
-              <p className="text-sm text-zinc-300">One-click containerization with full compatibility for existing Deep Conrad frameworks.</p>
+              <h3 className="font-mono text-xs uppercase text-cyan-600 dark:text-cyan-500 mb-2">03 Deployment</h3>
+              <p className="text-sm text-text-muted">One-click containerization with full compatibility for existing Deep Conrad frameworks.</p>
             </div>
           </div>
           
-          <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 group">
+          <div className="relative aspect-video rounded-2xl overflow-hidden border border-border-main group">
              <img 
                src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1200&h=600&fit=crop" 
                alt="Engine Breakdown" 
                className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity"
              />
              <div className="absolute inset-0 flex items-center justify-center">
-               <div className="p-4 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-cyan-400 font-mono text-sm tracking-widest uppercase">
+               <div className="p-4 bg-bg-abyss/60 backdrop-blur-md rounded-full border border-border-main text-cyan-600 dark:text-cyan-400 font-mono text-sm tracking-widest uppercase">
                  <Activity size={48} className="animate-pulse mb-2 mx-auto" />
                  LIVE STREAM ACTIVE
                </div>
@@ -95,7 +95,7 @@ export default function EngineWiki() {
 
       <section className="mb-16">
         <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-          <BookOpen className="text-indigo-400" />
+          <BookOpen className="text-indigo-500" />
           Technical Articles
         </h2>
         <div className="grid grid-cols-1 gap-6">
@@ -103,22 +103,22 @@ export default function EngineWiki() {
             <motion.div
               key={article.id}
               whileHover={{ x: 10 }}
-              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-500/30 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+              className="p-6 rounded-2xl bg-bg-abyss/40 border border-border-main hover:border-indigo-500/30 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
             >
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-[10px] font-mono font-bold text-indigo-400 uppercase tracking-widest">{article.category}</span>
-                  <span className="text-[10px] text-slate-500">•</span>
-                  <span className="text-[10px] text-slate-500">{article.date}</span>
+                  <span className="text-[10px] font-mono font-bold text-indigo-500 uppercase tracking-widest">{article.category}</span>
+                  <span className="text-[10px] text-text-muted">•</span>
+                  <span className="text-[10px] text-text-muted">{article.date}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{article.title}</h3>
-                <p className="text-sm text-slate-400 line-clamp-2 md:line-clamp-1">{article.excerpt}</p>
+                <h3 className="text-xl font-bold text-text-main mb-2">{article.title}</h3>
+                <p className="text-sm text-text-muted line-clamp-2 md:line-clamp-1">{article.excerpt}</p>
                 <div className="mt-4 flex items-center gap-6">
-                  <span className="text-[10px] text-slate-500 font-mono">By {article.author}</span>
-                  <span className="text-[10px] text-slate-500 font-mono">{article.readTime}</span>
+                  <span className="text-[10px] text-text-muted font-mono">By {article.author}</span>
+                  <span className="text-[10px] text-text-muted font-mono">{article.readTime}</span>
                   <button 
                     onClick={() => setActiveArticle(article)}
-                    className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-indigo-400 transition-colors"
+                    className="flex items-center gap-1.5 text-[10px] font-bold text-text-muted hover:text-indigo-500 transition-colors"
                   >
                     <MessageCircle size={14} />
                     {article.comments.length} Discussion
@@ -127,7 +127,7 @@ export default function EngineWiki() {
               </div>
               <button 
                 onClick={() => alert('Article system coming soon.')}
-                className="px-6 py-2 rounded-full border border-white/10 text-xs font-bold hover:bg-white/5 transition-colors whitespace-nowrap"
+                className="px-6 py-2 rounded-full border border-border-main text-xs font-bold hover:bg-indigo-500/10 transition-colors whitespace-nowrap"
               >
                 Read More
               </button>
