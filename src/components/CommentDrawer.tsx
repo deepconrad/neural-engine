@@ -1,11 +1,19 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Send, MessageSquare } from 'lucide-react';
-import { Post } from '../types';
+import { Comment } from '../types';
 
-export default function CommentDrawer({ isOpen, onClose, post }: { isOpen: boolean; onClose: () => void; post: Post | null }) {
-  if (!post) return null;
-
+export default function CommentDrawer({ 
+  isOpen, 
+  onClose, 
+  comments, 
+  title = "System Logs" 
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  comments: Comment[];
+  title?: string;
+}) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -27,7 +35,7 @@ export default function CommentDrawer({ isOpen, onClose, post }: { isOpen: boole
             <div className="p-6 border-b border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <MessageSquare className="text-indigo-400" size={20} />
-                <h2 className="text-lg font-bold">System Logs ({post.comments.length})</h2>
+                <h2 className="text-lg font-bold">{title} ({comments.length})</h2>
               </div>
               <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full text-slate-500 hover:text-white transition-colors">
                 <X size={20} />
@@ -35,7 +43,7 @@ export default function CommentDrawer({ isOpen, onClose, post }: { isOpen: boole
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
-              {post.comments.length === 0 ? (
+              {comments.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-slate-500 opacity-50 space-y-4">
                   <div className="w-16 h-16 rounded-full border-2 border-dashed border-slate-700 flex items-center justify-center">
                     <MessageSquare size={32} />
@@ -43,7 +51,7 @@ export default function CommentDrawer({ isOpen, onClose, post }: { isOpen: boole
                   <p className="text-sm font-mono uppercase tracking-widest">No logs detected</p>
                 </div>
               ) : (
-                post.comments.map((comment) => (
+                comments.map((comment) => (
                   <div key={comment.id} className="flex gap-4">
                     <div className="w-10 h-10 rounded-full border border-white/10 shrink-0 overflow-hidden">
                       <img src={comment.userAvatar} alt="" className="w-full h-full object-cover" />

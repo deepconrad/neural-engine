@@ -59,7 +59,8 @@ export default function Home() {
       <CommentDrawer 
         isOpen={!!activeCommentPost} 
         onClose={() => setActiveCommentPost(null)} 
-        post={activeCommentPost} 
+        comments={activeCommentPost?.comments || []}
+        title={activeCommentPost?.title}
       />
 
       <AnimatePresence>

@@ -6,6 +6,7 @@ export interface Article {
   date: string;
   readTime: string;
   category: string;
+  comments: Comment[];
 }
 
 export interface User {

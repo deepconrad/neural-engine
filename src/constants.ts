@@ -127,7 +127,17 @@ export const MOCK_ARTICLES: Article[] = [
     author: "Dr. Aris Conrad",
     date: "May 12, 2024",
     readTime: "8 min read",
-    category: "Architecture"
+    category: "Architecture",
+    comments: [
+      {
+        id: "ac1",
+        userId: "u1",
+        userName: "Aris Conrad",
+        userAvatar: "https://images.unsplash.com/photo-1614728263952-84ea206f99b6?w=100&h=100&fit=crop",
+        text: "This architecture is a major milestone for our team.",
+        timestamp: "5d ago"
+      }
+    ]
   },
   {
     id: "a2",
@@ -136,7 +146,8 @@ export const MOCK_ARTICLES: Article[] = [
     author: "Neural Dev Team",
     date: "May 10, 2024",
     readTime: "12 min read",
-    category: "Research"
+    category: "Research",
+    comments: []
   },
   {
     id: "a3",
@@ -145,6 +156,7 @@ export const MOCK_ARTICLES: Article[] = [
     author: "Security Ops",
     date: "May 05, 2024",
     readTime: "15 min read",
-    category: "Security"
+    category: "Security",
+    comments: []
   }
 ];

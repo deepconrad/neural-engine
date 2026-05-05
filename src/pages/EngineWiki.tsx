@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Cpu, Zap, Activity, Shield, Database, LayoutGrid, BookOpen } from 'lucide-react';
+import { Cpu, Zap, Activity, Shield, Database, LayoutGrid, BookOpen, MessageCircle } from 'lucide-react';
 import { MOCK_ARTICLES } from '../constants';
+import CommentDrawer from '../components/CommentDrawer';
+import { Article } from '../types';
 
 export default function EngineWiki() {
+  const [activeArticle, setActiveArticle] = useState<Article | null>(null);
+
   return (
     <div className="max-w-4xl mx-auto pb-24 md:pb-20 pt-12 px-4 md:px-8">
       <motion.div 
@@ -109,9 +113,16 @@ export default function EngineWiki() {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{article.title}</h3>
                 <p className="text-sm text-slate-400 line-clamp-2 md:line-clamp-1">{article.excerpt}</p>
-                <div className="mt-4 flex items-center gap-4">
+                <div className="mt-4 flex items-center gap-6">
                   <span className="text-[10px] text-slate-500 font-mono">By {article.author}</span>
                   <span className="text-[10px] text-slate-500 font-mono">{article.readTime}</span>
+                  <button 
+                    onClick={() => setActiveArticle(article)}
+                    className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-indigo-400 transition-colors"
+                  >
+                    <MessageCircle size={14} />
+                    {article.comments.length} Discussion
+                  </button>
                 </div>
               </div>
               <button 
@@ -124,6 +135,13 @@ export default function EngineWiki() {
           ))}
         </div>
       </section>
+
+      <CommentDrawer 
+        isOpen={!!activeArticle} 
+        onClose={() => setActiveArticle(null)} 
+        comments={activeArticle?.comments || []}
+        title={activeArticle?.title}
+      />
     </div>
   );
 }
