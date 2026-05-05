@@ -1,12 +1,15 @@
 import StoryBar from '../components/StoryBar';
 import PostCard from '../components/PostCard';
+import CommentDrawer from '../components/CommentDrawer';
 import { MOCK_POSTS, MOCK_STORIES } from '../constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Cpu } from 'lucide-react';
 import { useState } from 'react';
+import { Post } from '../types';
 
 export default function Home() {
   const [activeStory, setActiveStory] = useState<string | null>(null);
+  const [activeCommentPost, setActiveCommentPost] = useState<Post | null>(null);
 
   const selectedStory = MOCK_STORIES.find(s => s.id === activeStory);
 
@@ -45,10 +48,19 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.15, duration: 0.6 }}
           >
-            <PostCard post={post} />
+            <PostCard 
+              post={post} 
+              onCommentClick={() => setActiveCommentPost(post)}
+            />
           </motion.div>
         ))}
       </main>
+
+      <CommentDrawer 
+        isOpen={!!activeCommentPost} 
+        onClose={() => setActiveCommentPost(null)} 
+        post={activeCommentPost} 
+      />
 
       <AnimatePresence>
         {activeStory && selectedStory && (

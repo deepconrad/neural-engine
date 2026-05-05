@@ -3,23 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import EngineWiki from './pages/EngineWiki';
+import Nodes from './pages/Nodes';
 import StoryBar from './components/StoryBar';
+import DeployModal from './components/DeployModal';
 import { AnimatePresence } from 'motion/react';
 import { Activity, Shield, Cpu } from 'lucide-react';
 
 export default function App() {
+  const [isDeployOpen, setIsDeployOpen] = useState(false);
+
   return (
     <Router>
       <div className="flex flex-col h-screen bg-bg-abyss text-slate-100 overflow-hidden pt-16">
-        <Navbar />
+        <Navbar onDeployClick={() => setIsDeployOpen(true)} />
         
         <div className="flex flex-1 overflow-hidden relative">
+          <AnimatePresence mode="wait">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/engine" element={<EngineWiki />} />
+              <Route path="/nodes" element={<Nodes />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </AnimatePresence>
+          
           {/* Left Rail: Active Stories */}
-          <aside className="hidden lg:flex w-64 border-r border-white/5 bg-black/20 flex-col p-6 overflow-y-auto no-scrollbar">
+          <aside className="hidden lg:flex w-64 border-r border-white/5 bg-black/20 flex-col p-6 overflow-y-auto no-scrollbar shrink-0">
             <h3 className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-6">Active Syncs</h3>
             <StoryBar vertical />
             
@@ -32,24 +46,13 @@ export default function App() {
             </div>
           </aside>
 
-          {/* Main Content Area */}
-          <main className="flex-1 overflow-y-auto no-scrollbar bg-immersive-glow relative">
-            <AnimatePresence mode="wait">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/engine" element={<EngineWiki />} />
-                <Route path="*" element={<Home />} />
-              </Routes>
-            </AnimatePresence>
-            
-            {/* Technical Scanlines */}
-            <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]" 
-                 style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)', backgroundSize: '40px 40px' }} 
-            />
-          </main>
+          {/* Technical Scanlines */}
+          <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]" 
+               style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)', backgroundSize: '40px 40px' }} 
+          />
 
           {/* Right Sidebar: Telemetry */}
-          <aside className="hidden xl:flex w-72 border-l border-white/5 bg-black/40 p-6 flex-col gap-8 overflow-y-auto no-scrollbar">
+          <aside className="hidden xl:flex w-72 border-l border-white/5 bg-black/40 p-6 flex-col gap-8 overflow-y-auto no-scrollbar shrink-0">
             <div>
               <h3 className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-4">Node Telemetry</h3>
               <div className="grid grid-cols-2 gap-3">
@@ -81,10 +84,12 @@ export default function App() {
               </div>
             </div>
           </aside>
+
+          <DeployModal isOpen={isDeployOpen} onClose={() => setIsDeployOpen(false)} />
         </div>
 
         {/* Footer Status Bar */}
-        <footer className="h-8 border-t border-white/5 bg-black/60 px-6 flex items-center justify-between shrink-0">
+        <footer className="h-8 border-t border-white/5 bg-black/60 px-6 flex items-center justify-between shrink-0 z-10">
           <div className="flex items-center gap-4 text-[10px] text-slate-500">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> 

@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { Cpu, Activity, Database, BookOpen } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-export default function Navbar() {
+export default function Navbar({ onDeployClick }: { onDeployClick?: () => void }) {
   return (
     <nav className="h-16 border-b border-white/10 flex items-center justify-between px-6 md:px-8 bg-black/40 backdrop-blur-md fixed top-0 left-0 right-0 z-[100]">
       <div className="flex items-center gap-3">
@@ -35,7 +35,10 @@ export default function Navbar() {
           <span className="hidden md:inline">Documentation</span>
           <BookOpen size={18} className="md:hidden" />
         </NavLink>
-        <button className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-600/30 transition-all text-xs">
+        <button 
+          onClick={onDeployClick}
+          className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-600/30 transition-all text-xs"
+        >
           Deploy Instance
         </button>
       </div>

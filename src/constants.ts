@@ -1,4 +1,4 @@
-import { Post, Story } from "./types";
+import { Post, Story, Article } from "./types";
 
 export const MOCK_STORIES: Story[] = [
   {
@@ -116,5 +116,35 @@ export const MOCK_POSTS: Post[] = [
     likes: 3400,
     comments: [],
     timestamp: "5 hours ago"
+  }
+];
+
+export const MOCK_ARTICLES: Article[] = [
+  {
+    id: "a1",
+    title: "Optimizing Synaptic Routing for Edge Devices",
+    excerpt: "A comprehensive guide on reducing latency in decentralized neural networks using the Deep Conrad V4.2 architecture...",
+    author: "Dr. Aris Conrad",
+    date: "May 12, 2024",
+    readTime: "8 min read",
+    category: "Architecture"
+  },
+  {
+    id: "a2",
+    title: "The Future of Liquid Dynamic Meshes",
+    excerpt: "Exploring the theoretical limits of dynamic weight re-routing in massive-scale parallel inference engines...",
+    author: "Neural Dev Team",
+    date: "May 10, 2024",
+    readTime: "12 min read",
+    category: "Research"
+  },
+  {
+    id: "a3",
+    title: "Quantum-Resistant Encryption in Neural-Engines",
+    excerpt: "How we implemented air-gapped security layers that protect neural transactions against future quantum compute attacks...",
+    author: "Security Ops",
+    date: "May 05, 2024",
+    readTime: "15 min read",
+    category: "Security"
   }
 ];

@@ -4,13 +4,17 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { cn } from '../lib/utils';
 
-export default function PostCard({ post }: { post: Post }) {
+export default function PostCard({ post, onCommentClick }: { post: Post; onCommentClick?: () => void }) {
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes);
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
     setLikesCount(prev => isLiked ? prev - 1 : prev + 1);
+  };
+
+  const handleAction = (action: string) => {
+    alert(`${action} successful on this neural node.`);
   };
 
   return (
@@ -53,7 +57,10 @@ export default function PostCard({ post }: { post: Post }) {
               <Heart size={18} className={isLiked ? "fill-current" : ""} />
               {likesCount.toLocaleString()}
             </button>
-            <button className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-indigo-400 transition-colors">
+            <button 
+              onClick={onCommentClick}
+              className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-indigo-400 transition-colors"
+            >
               <MessageCircle size={18} />
               {post.comments.length}
             </button>
@@ -66,10 +73,16 @@ export default function PostCard({ post }: { post: Post }) {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="text-slate-500 hover:text-white transition-colors">
+          <button 
+            onClick={() => handleAction('Transmission sharing')}
+            className="text-slate-500 hover:text-white transition-colors"
+          >
             <Share2 size={18} />
           </button>
-          <button className="text-slate-500 hover:text-white transition-colors">
+          <button 
+            onClick={() => handleAction('Node bookmarking')}
+            className="text-slate-500 hover:text-white transition-colors"
+          >
             <Bookmark size={18} />
           </button>
         </div>

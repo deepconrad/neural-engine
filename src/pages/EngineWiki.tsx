@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Cpu, Zap, Activity, Shield, Database, LayoutGrid } from 'lucide-react';
+import { Cpu, Zap, Activity, Shield, Database, LayoutGrid, BookOpen } from 'lucide-react';
+import { MOCK_ARTICLES } from '../constants';
 
 export default function EngineWiki() {
   return (
@@ -79,11 +80,48 @@ export default function EngineWiki() {
                className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity"
              />
              <div className="absolute inset-0 flex items-center justify-center">
-               <div className="p-4 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-cyan-400">
-                 <Activity size={48} className="animate-pulse" />
+               <div className="p-4 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-cyan-400 font-mono text-sm tracking-widest uppercase">
+                 <Activity size={48} className="animate-pulse mb-2 mx-auto" />
+                 LIVE STREAM ACTIVE
                </div>
              </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+          <BookOpen className="text-indigo-400" />
+          Technical Articles
+        </h2>
+        <div className="grid grid-cols-1 gap-6">
+          {MOCK_ARTICLES.map((article) => (
+            <motion.div
+              key={article.id}
+              whileHover={{ x: 10 }}
+              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-500/30 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+            >
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-[10px] font-mono font-bold text-indigo-400 uppercase tracking-widest">{article.category}</span>
+                  <span className="text-[10px] text-slate-500">•</span>
+                  <span className="text-[10px] text-slate-500">{article.date}</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">{article.title}</h3>
+                <p className="text-sm text-slate-400 line-clamp-2 md:line-clamp-1">{article.excerpt}</p>
+                <div className="mt-4 flex items-center gap-4">
+                  <span className="text-[10px] text-slate-500 font-mono">By {article.author}</span>
+                  <span className="text-[10px] text-slate-500 font-mono">{article.readTime}</span>
+                </div>
+              </div>
+              <button 
+                onClick={() => alert('Article system coming soon.')}
+                className="px-6 py-2 rounded-full border border-white/10 text-xs font-bold hover:bg-white/5 transition-colors whitespace-nowrap"
+              >
+                Read More
+              </button>
+            </motion.div>
+          ))}
         </div>
       </section>
     </div>
