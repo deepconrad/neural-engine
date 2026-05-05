@@ -12,12 +12,24 @@ import Nodes from './pages/Nodes';
 import StoryBar from './components/StoryBar';
 import { AnimatePresence } from 'motion/react';
 import { Activity, Shield, Cpu } from 'lucide-react';
+import { cn } from './lib/utils';
 
 export default function App() {
+  const [isDark, setIsDark] = useState(false);
+
+  const toggleTheme = () => setIsDark(!isDark);
+
   return (
     <Router>
-      <div className="flex flex-col h-screen bg-bg-abyss text-text-main overflow-hidden pt-16">
-        <Navbar onDeployClick={() => window.location.href = 'https://trendwaveconnect.com'} />
+      <div className={cn(
+        "flex flex-col h-screen bg-bg-main text-text-main overflow-hidden pt-16 transition-colors duration-300",
+        isDark && "dark"
+      )}>
+        <Navbar 
+          onDeployClick={() => window.location.href = 'https://trendwaveconnect.com'} 
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+        />
         
         <div className="flex flex-1 overflow-hidden relative">
           <main className="flex-1 overflow-y-auto no-scrollbar bg-immersive-glow relative z-10">
@@ -46,8 +58,8 @@ export default function App() {
           </aside>
 
           {/* Technical Scanlines */}
-          <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]" 
-               style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)', backgroundSize: '40px 40px' }} 
+          <div className="fixed inset-0 pointer-events-none z-0 opacity-100" 
+               style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, var(--color-scanline) 1px, transparent 0)', backgroundSize: '40px 40px' }} 
           />
 
           {/* Right Sidebar: Telemetry */}
@@ -86,7 +98,7 @@ export default function App() {
         </div>
 
         {/* Footer Status Bar */}
-        <footer className="h-8 border-t border-border-main bg-bg-abyss/80 px-6 flex items-center justify-between shrink-0 z-10">
+        <footer className="h-8 border-t border-border-main bg-bg-abyss/80 px-6 flex items-center justify-between shrink-0 z-10 transition-colors duration-300">
           <div className="flex items-center gap-4 text-[10px] text-text-muted">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> 

@@ -1,8 +1,17 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Cpu, Activity, Database, BookOpen } from 'lucide-react';
+import { Activity, BookOpen, Sun, Moon } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-export default function Navbar({ onDeployClick }: { onDeployClick?: () => void }) {
+export default function Navbar({ 
+  onDeployClick, 
+  isDark, 
+  toggleTheme 
+}: { 
+  onDeployClick?: () => void;
+  isDark?: boolean;
+  toggleTheme?: () => void;
+}) {
   return (
     <nav className="h-16 border-b border-border-main flex items-center justify-between px-6 md:px-8 bg-bg-abyss/80 backdrop-blur-md fixed top-0 left-0 right-0 z-[100]">
       <div className="flex items-center gap-3">
@@ -35,12 +44,23 @@ export default function Navbar({ onDeployClick }: { onDeployClick?: () => void }
           <span className="hidden md:inline">Documentation</span>
           <BookOpen size={18} className="md:hidden" />
         </NavLink>
-        <button 
-          onClick={onDeployClick}
-          className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-500 hover:bg-indigo-500/20 transition-all text-xs font-bold"
-        >
-          Deploy Instance
-        </button>
+
+        <div className="flex items-center gap-2 border-l border-border-main pl-4 md:pl-8 ml-2">
+          <button 
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-bg-main transition-colors text-text-muted hover:text-indigo-500"
+            title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          
+          <button 
+            onClick={onDeployClick}
+            className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-500 hover:bg-indigo-500/20 transition-all text-xs font-bold whitespace-nowrap"
+          >
+            Deploy Instance
+          </button>
+        </div>
       </div>
     </nav>
   );
