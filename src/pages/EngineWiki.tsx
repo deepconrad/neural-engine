@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { Cpu, Zap, Activity, Shield, Database, LayoutGrid, BookOpen, MessageCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Cpu, Zap, Activity, Shield, Database, LayoutGrid, BookOpen, MessageCircle, Plus, X } from 'lucide-react';
 import { MOCK_ARTICLES } from '../constants';
 import CommentDrawer from '../components/CommentDrawer';
 import { Article } from '../types';
+import ArticleEditor from '../components/ArticleEditor';
+import ReactMarkdown from 'react-markdown';
 
 export default function EngineWiki() {
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
+  const [viewingArticle, setViewingArticle] = useState<Article | null>(null);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [articles, setArticles] = useState<Article[]>(MOCK_ARTICLES);
+
+  const handleCreateArticle = (newArticle: Article) => {
+    setArticles([newArticle, ...articles]);
+  };
 
   return (
     <div className="max-w-4xl mx-auto pb-24 md:pb-20 pt-12 px-4 md:px-8">
@@ -94,12 +103,22 @@ export default function EngineWiki() {
       </section>
 
       <section className="mb-16">
-        <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-          <BookOpen className="text-indigo-500" />
-          Technical Articles
-        </h2>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold flex items-center gap-3">
+            <BookOpen className="text-indigo-500" />
+            Technical Articles
+          </h2>
+          <button 
+            onClick={() => setIsEditorOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500 text-white text-xs font-bold hover:bg-indigo-600 transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
+          >
+            <Plus size={16} />
+            Create Article
+          </button>
+        </div>
+        
         <div className="grid grid-cols-1 gap-6">
-          {MOCK_ARTICLES.map((article) => (
+          {articles.map((article) => (
             <motion.div
               key={article.id}
               whileHover={{ x: 10 }}
@@ -111,7 +130,7 @@ export default function EngineWiki() {
                   <span className="text-[10px] text-text-muted">•</span>
                   <span className="text-[10px] text-text-muted">{article.date}</span>
                 </div>
-                <h3 className="text-xl font-bold text-text-main mb-2">{article.title}</h3>
+                <h3 className="text-xl font-bold text-text-main mb-2 tracking-tight">{article.title}</h3>
                 <p className="text-sm text-text-muted line-clamp-2 md:line-clamp-1">{article.excerpt}</p>
                 <div className="mt-4 flex items-center gap-6">
                   <span className="text-[10px] text-text-muted font-mono">By {article.author}</span>
@@ -126,7 +145,7 @@ export default function EngineWiki() {
                 </div>
               </div>
               <button 
-                onClick={() => alert('Article system coming soon.')}
+                onClick={() => setViewingArticle(article)}
                 className="px-6 py-2 rounded-full border border-border-main text-xs font-bold hover:bg-indigo-500/10 transition-colors whitespace-nowrap"
               >
                 Read More
@@ -136,6 +155,17 @@ export default function EngineWiki() {
         </div>
       </section>
 
+      <ArticleEditor 
+        isOpen={isEditorOpen} 
+        onClose={() => setIsEditorOpen(false)} 
+        onSubmit={handleCreateArticle}
+      />
+
+      <ArticleViewer 
+        article={viewingArticle} 
+        onClose={() => setViewingArticle(null)} 
+      />
+
       <CommentDrawer 
         isOpen={!!activeArticle} 
         onClose={() => setActiveArticle(null)} 
@@ -143,6 +173,65 @@ export default function EngineWiki() {
         title={activeArticle?.title}
       />
     </div>
+  );
+}
+
+function ArticleViewer({ article, onClose }: { article: Article | null, onClose: () => void }) {
+  if (!article) return null;
+
+  return (
+    <AnimatePresence>
+      <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 md:p-8">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          className="relative w-full max-w-4xl h-full max-h-[90vh] bg-bg-abyss border border-border-main rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+        >
+          <div className="p-6 border-b border-border-main flex items-center justify-between bg-bg-abyss/80 backdrop-blur-md">
+            <div className="flex items-center gap-3">
+              <span className="px-2 py-0.5 bg-indigo-500 text-white text-[10px] font-black uppercase rounded">Technical Doc</span>
+              <span className="text-[10px] text-text-muted font-mono">{article.id}</span>
+            </div>
+            <button 
+              onClick={onClose}
+              className="p-2 hover:bg-bg-main rounded-full text-text-muted hover:text-text-main transition-colors"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-8 md:p-12 no-scrollbar">
+            <div className="max-w-3xl mx-auto prose dark:prose-invert prose-indigo prose-sm md:prose-base">
+              <div className="mb-12 border-b border-border-main pb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="px-2 py-0.5 bg-indigo-500/10 text-indigo-500 text-[10px] font-black uppercase rounded border border-indigo-500/20">{article.category}</span>
+                  <span className="text-[10px] text-text-muted font-mono uppercase tracking-[0.2em]">{article.date}</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-text-main mt-0">{article.title}</h1>
+                <p className="text-xl text-text-muted italic font-light leading-relaxed mt-4">
+                  {article.excerpt}
+                </p>
+                <div className="mt-8 flex items-center gap-4 text-xs text-text-muted font-mono">
+                  <span>Author: {article.author}</span>
+                  <span>•</span>
+                  <span>{article.readTime}</span>
+                </div>
+              </div>
+              <div className="markdown-body">
+                <ReactMarkdown>{article.content || 'This article contains technical telemetry data that is currently being decrypted. Please check back later.'}</ReactMarkdown>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </AnimatePresence>
   );
 }
 

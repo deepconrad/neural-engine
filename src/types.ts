@@ -7,6 +7,7 @@ export interface Article {
   readTime: string;
   category: string;
   comments: Comment[];
+  content?: string;
 }
 
 export interface User {
